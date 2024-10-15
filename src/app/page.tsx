@@ -1,68 +1,117 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BookOpen, CheckCircle, ChevronRight } from "lucide-react";
+import {
+  BookOpen,
+  CheckCircle,
+  ChevronRight,
+  ArrowRight,
+  Menu,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 2.5 },
+};
 
-export default function LandingPage() {
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 120 },
-  };
-
-  const staggerChildren = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1,
-      },
+const staggerChildren = {
+  animate: {
+    transition: {
+      staggerChildren: 0.4,
     },
-  };
+  },
+};
+export default function LandingPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen w-full flex-col">
       <motion.header
-        className="px-4 lg:px-6 h-16 flex flex-col sm:flex-row items-center justify-center sm:justify-between bg-[#c3a540]"
+        className="px-4 lg:px-6 py-4 bg-gradient-to-r from-[#101010] to-[#2a2a2a] border-b border-[#c3a540]/20"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Link className="flex items-center justify-center" href="#">
-          <BookOpen className="h-6 w-6 text-[#101010]" />
-          <span className="ml-2 sm:text-2xl font-bold text-[#101010]">
-            Visionário de Sucesso
-          </span>
-        </Link>
-        <nav className="flex gap-4 sm:gap-6">
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4 text-[#101010]"
-            href="#about"
-          >
-            Sobre
+        <div className="container mx-auto flex items-center justify-between">
+          <Link className="flex items-center justify-center" href="#">
+            <BookOpen className="h-8 w-8 text-[#c3a540]" />
+            <span className="ml-2 sm:text-sm lg:text-2xl font-bold tracking-wider text-[#c3a540]">
+              VISIONÁRIO DE SUCESSO
+            </span>
           </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4 text-[#101010]"
-            href="#benefits"
+          <nav className="hidden md:flex gap-6">
+            {["Sobre", "Benefícios", "Preview", "Comprar"].map(
+              (item, index) => (
+                <Link
+                  key={index}
+                  className="text-sm font-medium text-gray-200 hover:text-[#c3a540] transition-colors duration-200"
+                  href={`#${item.toLowerCase()}`}
+                >
+                  {item}
+                </Link>
+              )
+            )}
+          </nav>
+          <Button className="hidden md:inline-flex bg-[#c3a540] text-[#101010] hover:bg-[#d4b655] transition-colors duration-200">
+            Compre Agora
+          </Button>
+          <button
+            className="md:hidden text-white"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            Benefícios
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4 text-[#101010]"
-            href="#cta"
-          >
-            Comprar
-          </Link>
-        </nav>
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
       </motion.header>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-[#101010] border-b border-[#c3a540]/20"
+          >
+            <nav className="flex flex-col items-center py-4">
+              {["Sobre", "Benefícios", "Preview", "Comprar"].map(
+                (item, index) => (
+                  <Link
+                    key={index}
+                    className="text-sm font-medium text-gray-200 hover:text-[#c3a540] transition-colors duration-200 py-2"
+                    href={`#${item.toLowerCase()}`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item}
+                  </Link>
+                )
+              )}
+              <Button
+                className="mt-4 bg-[#c3a540] text-[#101010] hover:bg-[#d4b655] transition-colors duration-200"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Compre Agora
+              </Button>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <main className="flex-1">
         <section className="w-full flex justify-center py-12 md:py-24 lg:py-32 bg-[#101010]">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <motion.div
-                className="flex flex-col justify-center space-y-4"
+                className="flex flex-col justify-center space-y-4 pb-8 sm:pb-24"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
@@ -98,17 +147,18 @@ export default function LandingPage() {
               >
                 <Image
                   alt="Ebook Marketing Digital"
-                  className="mx-auto aspect-[1/1.5] overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-                  height="600"
+                  className="mx-auto overflow-hidden rounded-xl object-contain object-center sm:w-full lg:order-last"
                   src="/logo.png"
                   width="400"
+                  height="600"
                 />
               </motion.div>
             </div>
           </div>
         </section>
+
         <section
-          id="about"
+          id="sobre"
           className="w-full py-12 md:py-24 lg:py-32 bg-[#101010]"
         >
           <motion.div
@@ -136,7 +186,7 @@ export default function LandingPage() {
               <motion.div variants={fadeIn}>
                 <Image
                   alt="Vitoria Nunes"
-                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+                  className="mx-auto aspect-video overflow-hidden rounded-xl object-contain object-center sm:w-full lg:order-last"
                   height="310"
                   src="/logo.png"
                   width="550"
@@ -178,8 +228,9 @@ export default function LandingPage() {
             </div>
           </motion.div>
         </section>
+
         <section
-          id="benefits"
+          id="benefícios"
           className="w-full flex flex-col items-center justify-center py-12 md:py-24 lg:py-32 bg-[#c3a540]"
         >
           <motion.div
@@ -229,9 +280,89 @@ export default function LandingPage() {
             </motion.div>
           </motion.div>
         </section>
+
+        <section id="preview" className="w-full py-12 md:py-24 lg:py-32 ">
+          <motion.div
+            className="container px-4 md:px-6 mx-auto"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <motion.div
+              className="flex flex-col items-center justify-center space-y-4 text-center"
+              variants={fadeIn}
+            >
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#c3a540]">
+                  Dê uma Espiada no Conteúdo
+                </h2>
+                <p className="max-w-[900px] text-gray-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Veja algumas páginas do ebook e descubra o valor que você está
+                  prestes a adquirir
+                </p>
+              </div>
+            </motion.div>
+            <motion.div
+              className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+              variants={staggerChildren}
+            >
+              {[
+                {
+                  title: "Estratégias de SEO Avançadas",
+                  description:
+                    "Aprenda técnicas de otimização que farão seu site alcançar o topo das buscas.",
+                  image: "/pagina-1.png",
+                },
+                {
+                  title: "Funil de Vendas Otimizado",
+                  description:
+                    "Descubra como criar um funil de vendas que converte visitantes em clientes fiéis.",
+                  image: "/pagina-2.png",
+                },
+                {
+                  title: "Análise de Dados Eficiente",
+                  description:
+                    "Saiba interpretar métricas e tomar decisões baseadas em dados concretos.",
+                  image: "/pagina-3.png",
+                },
+              ].map((page, index) => (
+                <motion.div
+                  key={index}
+                  className="flex flex-col items-center"
+                  variants={fadeIn}
+                >
+                  <Image
+                    src={page.image}
+                    alt={page.title}
+                    width={300}
+                    height={400}
+                    className="rounded-lg shadow-lg mb-4"
+                  />
+                  <h3 className="text-xl font-bold text-[#c3a540] mb-2">
+                    {page.title}
+                  </h3>
+                  <p className="text-gray-300 text-center">
+                    {page.description}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+            <motion.div className="mt-12 text-center" variants={fadeIn}>
+              <Link
+                href="#cta"
+                className="inline-flex items-center justify-center rounded-md bg-[#c3a540] px-8 py-3 text-sm font-medium text-[#101010] shadow transition-colors hover:bg-[#e0b038] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c3a540]"
+              >
+                Desbloqueie Todo o Conteúdo
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </motion.div>
+          </motion.div>
+        </section>
+
         <section
-          id="cta"
-          className="w-full flex justify-center py-12 md:py-24 lg:py-32 bg-[#101010]"
+          id="comprar"
+          className="w-full flex justify-center py-12 md:py-24 lg:py-32 bg-[#1e1e1e]"
         >
           <motion.div
             className="container px-4 md:px-6"
@@ -248,23 +379,23 @@ export default function LandingPage() {
                 <h2 className="text-3xl font-bold tracking-tighter text-[#c3a540] sm:text-5xl">
                   Pronto para Transformar seu Negócio?
                 </h2>
-                <p className="max-w-[600px] text-gray-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="text-gray-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Adquira agora o ebook {'"Visionário de Sucesso"'} e comece sua
                   jornada rumo ao sucesso digital.
                 </p>
               </div>
               <motion.div
-                className="w-full max-w-sm space-y-2"
+                className="w-full max-w-lg space-y-2"
                 variants={fadeIn}
               >
                 <form className="flex flex-col gap-2">
                   <Input
-                    className="bg-white text-[#101010]"
+                    className="bg-white p-6 text-[#101010]"
                     placeholder="Seu melhor e-mail"
                     type="email"
                   />
                   <Button
-                    className="bg-[#c3a540] text-[#101010] hover:bg-[#e0b038]"
+                    className="bg-[#c3a540] p-6 font-bold text-[#101010] hover:bg-[#e0b038]"
                     type="submit"
                   >
                     Comprar Ebook
@@ -275,9 +406,9 @@ export default function LandingPage() {
                   Ao comprar, você concorda com nossos{" "}
                   <Link
                     className="underline underline-offset-2 text-[#c3a540]"
-                    href="/privacy"
+                    href="/politica-privacidade"
                   >
-                    Termos de Serviço
+                    Política de Privacidade
                   </Link>
                   .
                 </p>
@@ -286,8 +417,9 @@ export default function LandingPage() {
           </motion.div>
         </section>
       </main>
+
       <motion.footer
-        className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-[#c3a540] bg-[#101010]"
+        className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-[#c3a540]/20 bg-[#101010]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -298,16 +430,18 @@ export default function LandingPage() {
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link
             className="text-xs hover:underline underline-offset-4 text-[#c3a540]"
-            href="#"
+            href="/politica-privacidade"
           >
-            Termos de Serviço
+            Política de Privacidade
           </Link>
-          <Link
+          <button
             className="text-xs hover:underline underline-offset-4 text-[#c3a540]"
-            href="/privacy"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
-            Privacidade
-          </Link>
+            Topo
+          </button>
         </nav>
       </motion.footer>
     </div>

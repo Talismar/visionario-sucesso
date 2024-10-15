@@ -1,25 +1,35 @@
+"use client";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function PrivacyPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#101010] text-gray-300">
-      <header className="px-4 lg:px-6 h-16 flex items-center bg-[#c3a540]">
-        <Link className="flex items-center justify-center" href="/">
-          <BookOpen className="h-6 w-6 text-[#101010]" />
-          <span className="ml-2 sm:text-2xl font-bold text-[#101010]">
-            Visionário de Sucesso
-          </span>
-        </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4 text-[#101010]"
-            href="/"
-          >
-            Início
+      <motion.header
+        className="px-4 lg:px-6 py-4 bg-gradient-to-r from-[#101010] to-[#2a2a2a] border-b border-[#c3a540]/20"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container mx-auto flex items-center justify-between">
+          <Link className="flex items-center justify-center" href="#">
+            <BookOpen className="h-8 w-8 text-[#c3a540]" />
+            <span className="ml-2 sm:text-sm lg:text-2xl font-bold tracking-wider text-[#c3a540]">
+              VISIONÁRIO DE SUCESSO
+            </span>
           </Link>
-        </nav>
-      </header>
+          <nav className="hidden md:flex gap-6">
+            <Link
+              className="text-sm font-medium text-gray-200 hover:text-[#c3a540] transition-colors duration-200"
+              href="/"
+            >
+              Início
+            </Link>
+          </nav>
+        </div>
+      </motion.header>
+
       <main className="flex-1 py-12 container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-8 text-[#c3a540]">
           Política de Privacidade
