@@ -10,6 +10,7 @@ import {
   ArrowRight,
   Menu,
   X,
+  Shield,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -357,6 +358,75 @@ export default function LandingPage() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </motion.div>
+          </motion.div>
+        </section>
+
+        <section
+          id="garantia"
+          className="w-full py-16 md:py-24 lg:py-32 bg-[#101010]"
+        >
+          <motion.div
+            className="container px-4 md:px-6 mx-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2.5, ease: "easeInOut" }}
+          >
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+              <motion.div
+                className="lg:w-1/2"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 2.5, delay: 0.5, ease: "easeInOut" }}
+              >
+                <Image
+                  src="/garantia-7-dias.png" // Substitua por sua imagem de garantia
+                  alt="Garantia de 7 dias"
+                  width={500}
+                  height={500}
+                  className="rounded-lg shadow-2xl"
+                />
+              </motion.div>
+              <motion.div
+                className="lg:w-1/2 space-y-6"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 2.5, delay: 1, ease: "easeInOut" }}
+              >
+                <h2 className="text-3xl md:text-4xl font-bold text-[#c3a540]">
+                  Garantia de Satisfação de 7 Dias
+                </h2>
+                <p className="text-xl text-gray-300">
+                  Estamos tão confiantes na qualidade do nosso ebook que
+                  oferecemos uma garantia de reembolso total por 7 dias.
+                </p>
+                <ul className="space-y-4">
+                  {[
+                    "Teste o conteúdo sem riscos",
+                    "Reembolso integral se não estiver satisfeito",
+                    "Sem perguntas, sem complicações",
+                  ].map((item, index) => (
+                    <motion.li
+                      key={index}
+                      className="flex items-center space-x-3 text-gray-300"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 2.5,
+                        delay: 1.5 + index * 0.2,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <Shield className="h-6 w-6 text-[#c3a540]" />
+                      <span>{item}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+                <p className="text-gray-400 italic">
+                  Sua satisfação é nossa prioridade. Invista em seu futuro com
+                  confiança!
+                </p>
+              </motion.div>
+            </div>
           </motion.div>
         </section>
 
