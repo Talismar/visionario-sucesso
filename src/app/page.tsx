@@ -379,7 +379,7 @@ export default function LandingPage() {
                 transition={{ duration: 2.5, delay: 0.5, ease: "easeInOut" }}
               >
                 <Image
-                  src="/garantia-7-dias.png" // Substitua por sua imagem de garantia
+                  src="/visionario-sucesso/garantia-7-dias.png" // Substitua por sua imagem de garantia
                   alt="Garantia de 7 dias"
                   width={500}
                   height={500}
