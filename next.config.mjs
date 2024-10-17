@@ -2,9 +2,7 @@
 const nextConfig = {
     output: "export",
     basePath: "/nextjs-github-pages",
-    images: {
-      unoptimized: true,
-    },
+    pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 };
 
 export default nextConfig;
