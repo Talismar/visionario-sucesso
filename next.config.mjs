@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "export",
-    basePath: "/nextjs-github-pages",
-    pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+    basePath: "/nextjs-github-pages"
 };
 
 export default nextConfig;
