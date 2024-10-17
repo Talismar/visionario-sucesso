@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const isProd = process.env.NODE_ENV == 'production'
 const nextConfig = {
     output: "export",
-    basePath: "/nextjs-github-pages"
+    basePath: isProd ? "/visionario-sucesso" : ''
 };
 
 export default nextConfig;
