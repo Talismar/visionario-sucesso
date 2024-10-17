@@ -28,6 +28,8 @@ const staggerChildren = {
     },
   },
 };
+
+const isProd = process.env.NODE_ENV == "production";
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -149,7 +151,7 @@ export default function LandingPage() {
                 <Image
                   alt="Ebook Marketing Digital"
                   className="mx-auto overflow-hidden rounded-xl object-contain object-center sm:w-full lg:order-last"
-                  src="/logo.png"
+                  src={`${isProd ? "/visionario-sucesso" : ""}/logo.png`}
                   width="400"
                   height="600"
                 />
@@ -189,7 +191,7 @@ export default function LandingPage() {
                   alt="Vitoria Nunes"
                   className="mx-auto aspect-video overflow-hidden rounded-xl object-contain object-center sm:w-full lg:order-last"
                   height="310"
-                  src="/logo.png"
+                  src={`${isProd ? "/visionario-sucesso" : ""}/logo.png`}
                   width="550"
                 />
               </motion.div>
@@ -313,19 +315,19 @@ export default function LandingPage() {
                   title: "Estratégias de SEO Avançadas",
                   description:
                     "Aprenda técnicas de otimização que farão seu site alcançar o topo das buscas.",
-                  image: "/pagina-1.png",
+                  image: `${isProd ? "/visionario-sucesso" : ""}/pagina-1.png`,
                 },
                 {
                   title: "Funil de Vendas Otimizado",
                   description:
                     "Descubra como criar um funil de vendas que converte visitantes em clientes fiéis.",
-                  image: "/pagina-2.png",
+                  image: `${isProd ? "/visionario-sucesso" : ""}/pagina-2.png`,
                 },
                 {
                   title: "Análise de Dados Eficiente",
                   description:
                     "Saiba interpretar métricas e tomar decisões baseadas em dados concretos.",
-                  image: "/pagina-3.png",
+                  image: `${isProd ? "/visionario-sucesso" : ""}/pagina-3.png`,
                 },
               ].map((page, index) => (
                 <motion.div
@@ -379,7 +381,9 @@ export default function LandingPage() {
                 transition={{ duration: 2.5, delay: 0.5, ease: "easeInOut" }}
               >
                 <Image
-                  src="/visionario-sucesso/garantia-7-dias.png" // Substitua por sua imagem de garantia
+                  src={`${
+                    isProd ? "/visionario-sucesso" : ""
+                  }/garantia-7-dias.png`}
                   alt="Garantia de 7 dias"
                   width={500}
                   height={500}
